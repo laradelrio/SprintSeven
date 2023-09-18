@@ -1,0 +1,7 @@
+/* You can add global styles to this file, and also import other style files */
+/*add bootstrap vaiables to change here*/
+
+$display-font-weight:300;
+@import "../node_modules/bootstrap/scss/bootstrap.scss"
+/* Importing Bootstrap SCSS file. */;
+@import 'bootstrap/scss/bootstrap';

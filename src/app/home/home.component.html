@@ -1,0 +1,39 @@
+
+<app-home-navbar></app-home-navbar>
+<div class="container mt-5">
+  <h2>What would you like to do?</h2>
+  <form (ngSubmit)="formIsValid() ">
+      <section class="mt-4 mb-3">
+          <div *ngFor="let service of companyService" class="form-check">
+      
+            <input 
+              class="form-check-input" 
+              type="checkbox" 
+              (change)="isChecked($event, service)
+              "
+            />
+              
+            <label class="form-check-label" > {{service.name}} - {{service.price}}€ </label>
+            
+            <app-home-panel 
+              *ngIf="service.name === this.companyService[0].name && this.companyService[0].checked===true"
+              (panelChanged)="computeTotalPrice(service)">
+            </app-home-panel>
+      
+          </div>
+          
+      </section>
+      <p *ngIf="noServiceSelected"  class="text-danger">Please select at least one service</p>
+      <p>Total: {{totalPrice}}€</p>
+
+      <section>
+        <app-client-quote-form></app-client-quote-form>
+      </section>
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+        
+  </form>
+  <app-home-client-quote-list></app-home-client-quote-list>
+</div>
+
+
