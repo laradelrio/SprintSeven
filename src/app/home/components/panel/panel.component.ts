@@ -29,12 +29,12 @@ export class PanelComponent {
     })
   }
   
-  computeExrasPrice(): void {
-    if(this.serviceDetailsForm.valid){
-      this.totalBudget.computeWebSiteExtras(this.pages, this.languages);
-      this.extrasChanged();
-    } 
-  }
+  // computeExrasPrice(): void {
+  //   if(this.serviceDetailsForm.valid){
+  //     this.totalBudget.computeWebSiteExtras(this.pages, this.languages);
+  //     this.extrasChanged();
+  //   } 
+  // }
 
   addExtra(extra: string ): void {
     if(extra==="pages") {
@@ -46,7 +46,7 @@ export class PanelComponent {
         this.languages++
         this.serviceDetailsForm.controls['languages'].setValue(this.languages);
     }
-    this.computeExrasPrice()
+    // this.computeExrasPrice()
   }
 
   subtractExtra(extra: string): void {
@@ -60,7 +60,7 @@ export class PanelComponent {
         this.languages--
         this.serviceDetailsForm.controls['languages'].setValue(this.languages);
      }
-    this.computeExrasPrice()
+    // this.computeExrasPrice()
    }
 
   //Emit to home(parent), smt in child changed

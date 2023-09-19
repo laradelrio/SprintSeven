@@ -9,20 +9,17 @@ export class CompanyServicesService {
   constructor() {}
   //interface
   companyServices: CompanyService[] = [
-    {name: "Make a Web Site",
+    {label: "Make a Web Site",
     price: 500,
-    checked: false,
-    id: "website"
+    id: "website",
     },
-    {name: "SEO campaign",
+    {label: "SEO campaign",
     price: 300,
-    checked: false,
-    id: "seo"
+    id: "seo",
     },
-    {name: "Publicity campaign",
+    {label: "Publicity campaign",
     price: 200,
-    checked: false,
-    id: "publi"
+    id: "publicity",
     },
   ]
 }

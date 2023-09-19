@@ -2,6 +2,34 @@
 <app-home-navbar></app-home-navbar>
 <div class="container mt-5">
   <h2>What would you like to do?</h2>
+<form [formGroup]="clientForm">
+
+  <section formGroupName="serviceCheckbox" class="mt-4 mb-3" >
+
+    <div *ngFor="let service of companyServiceList" class="form-check" >
+
+      <input  
+        type="checkbox"
+        class="form-check-input"
+        [formControlName]="service.id"
+        [id]="service.id"
+        (change)="computeTotalPrice()"
+      />
+
+      <label [for]="service.id" class="form-check-label" > {{service.label}} - {{service.price}}€ </label>
+
+      <app-home-panel *ngIf="f.get('serviceCheckbox.website')?.value && service.id==='website'">
+      </app-home-panel>
+     
+    </div>
+    
+    <p *ngIf="f.controls['serviceCheckbox'].errors && f.controls['serviceCheckbox'].touched"  class="text-danger">Please select at least one service</p>
+      <p>Total: {{totalPrice}}€</p>
+  </section>
+
+</form>
+
+<!--
   <form (ngSubmit)="formIsValid() ">
       <section class="mt-4 mb-3">
           <div *ngFor="let service of companyService" class="form-check">
@@ -36,4 +64,4 @@
   <app-home-client-quote-list></app-home-client-quote-list>
 </div>
 
-
+-->

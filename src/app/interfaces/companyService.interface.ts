@@ -1,6 +1,5 @@
 export interface CompanyService {
-    name: String;
+    label: string;
     price: number;
-    checked: boolean;
     id: string;
 }
