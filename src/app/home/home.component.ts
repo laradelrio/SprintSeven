@@ -1,11 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
 import { CompanyServicesService } from '../service/companyServices/company-services.service';
 import { CompanyService } from '../interfaces/companyService.interface';
-import { TotalBudgetService } from '../service/totalBudget/total-budget.service';
+import { TotalQuoteService } from '../service/totalQuote/total-quote.service';
 import { ClientQuoteFormComponent } from './components/client-quote-form/client-quote-form.component';
 import { PanelComponent } from './components/panel/panel.component';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormValidationService } from '../service/FormValidationService/form-validation-service.service';
+import { ServiceTotals } from '../interfaces/serviceTotals.interface';
 
 
 @Component({
@@ -15,7 +16,7 @@ import { FormValidationService } from '../service/FormValidationService/form-val
 })
 export class HomeComponent {
 
-  totalPrice: number = 0;
+  totalQuote: number = 0;
 
 
   clientForm = new FormGroup({
@@ -36,59 +37,23 @@ export class HomeComponent {
   constructor(
     public formValidationService: FormValidationService,
     public companyServicesList: CompanyServicesService,
-    public totalBudget: TotalBudgetService,
+    public totalQuoteService: TotalQuoteService,
     ){}   
-
-
-    get companyServiceList():CompanyService[]{
-      return this.companyServicesList.companyServices
-    }
 
     get f(){
       return this.clientForm;
-     
+    }
+
+    get companyServiceList(): CompanyService[]{
+      return this.companyServicesList.companyServices
     }
   
-    computeTotalPrice(){
-
-     let  Objecttt= this.f.get('serviceCheckbox')?.value;
-
-   
-      // servicesObject.entires
-      // debugger
-      Object.keys(!Objecttt).forEach(function([key,index]) {
-        console.log(key)}
- //hola
-      )
-
-
-      
-      // for (let service of spreadService){
-
-      //   switch (service?.)
-      //   let websiteCost: number=0;
-      //   let seoCost: number=0;
-      //   let publicityCost: number=0;
-      //   if (service?.website){
-      
-      //   }else{
-
-      //   }
-
-      //   if (service?.seo){
-          
-      //   } else{
-
-      //   }
-
-      //   if (service?.seo){
-          
-      //   } else{
-
-      //   }
-      // }
+    computeTotalPrice() {
+         
+        this.totalQuote = this.totalQuoteService.computeTotalQuote(this.clientForm)
+    
     }
-      //check if box is checked and teh add or substract
+      
      
     
       saveServices():void{
@@ -187,5 +152,6 @@ export class HomeComponent {
   //   }
  
   }
+
 
 

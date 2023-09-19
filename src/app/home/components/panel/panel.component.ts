@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { TotalBudgetService } from 'src/app/service/totalBudget/total-budget.service';
+import { TotalQuoteService } from 'src/app/service/totalQuote/total-quote.service';
 import { PopupComponent } from '../popup/popup.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -20,7 +20,7 @@ export class PanelComponent {
 
   serviceDetailsForm: FormGroup;
   constructor(private fb: FormBuilder,
-    public totalBudget: TotalBudgetService,
+    public totalBudget: TotalQuoteService,
     private openBModal: NgbModal,
     ) {
     this.serviceDetailsForm = this.fb.group({

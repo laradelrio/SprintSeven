@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { TotalBudgetService } from 'src/app/service/totalBudget/total-budget.service';
+import { TotalQuoteService } from 'src/app/service/totalQuote/total-quote.service';
 
 @Component({
   selector: 'app-client-quote-form',
@@ -18,7 +18,7 @@ export class ClientQuoteFormComponent {
 
   constructor(
     private fb: FormBuilder, //Form builder is theform model associated with the HTML form in the template.
-    public totalBudgetService: TotalBudgetService,
+    public totalBudgetService: TotalQuoteService,
     
   ) {
     this.clientQuoteForm = this.fb.group({

@@ -13,7 +13,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavbarComponent } from './home/components/navbar/navbar.component';
 import { ClientQuoteListComponent } from './home/components/client-quote-list/client-quote-list.component';
 import { ClientQuoteFormComponent } from './home/components/client-quote-form/client-quote-form.component';
-import { TotalBudgetService } from './service/totalBudget/total-budget.service';
+import { TotalQuoteService } from './service/totalQuote/total-quote.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +35,7 @@ import { TotalBudgetService } from './service/totalBudget/total-budget.service';
   ],
   providers: [
     CompanyServicesService,
-    TotalBudgetService,
+    TotalQuoteService,
   ],
   bootstrap: [AppComponent]
 })

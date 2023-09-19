@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { TotalBudgetService } from './total-budget.service';
+import { TotalQuoteService } from './total-quote.service';
 
 describe('TotalBudgetService', () => {
-  let service: TotalBudgetService;
+  let service: TotalQuoteService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(TotalBudgetService);
+    service = TestBed.inject(TotalQuoteService);
   });
 
   it('should be created', () => {
