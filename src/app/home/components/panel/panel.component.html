@@ -4,6 +4,49 @@
         <i class="fa-regular fa-circle-question justify-content-end"></i>
     </div>
         
+
+<form [formGroup]="serviceDetailsForm" class="from-group">
+
+    <section *ngFor="let data of panelData" class="mb-3">
+        <label class="form-label" [for]="data.name">{{data.label}} </label> 
+        <div class="d-flex">
+            <button 
+                type="button" 
+                class="btn btn-primary me-2"
+                (click)="subtractExtra(data.name)">
+            <i class="fa-solid fa-minus"></i></button>
+
+            <input 
+                type="number"
+                [formControlName]="data.name" 
+                class="form-control"
+                [id]="data.name"/> 
+                
+            <button 
+                type="button" 
+                class="btn btn-primary ms-2"
+                (click)="addExtra(data.name)">
+            <i class="fa-solid fa-plus"></i></button>  
+            
+        </div>
+         
+        <!-- ONLY WHEN FULL FORM SUMBITED-->
+        <p *ngIf="serviceDetailsForm.controls[data.name].getError('min') 
+        && serviceDetailsForm.controls[data.name].touched && serviceDetailsForm.controls[data.name].dirty "
+            class="text-danger ps-5">Please enter a value greater than or equal to 1</p>
+
+    </section>
+</form>
+
+
+
+
+
+<!-- 
+
+
+
+
     <form [formGroup]="serviceDetailsForm" class="from-group">
         <section class="mb-3">
             <label class="form-label" for="pages"> Number of Pages </label> 
@@ -62,4 +105,4 @@
     
     
     
-
+ -->

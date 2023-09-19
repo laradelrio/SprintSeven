@@ -10,6 +10,27 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./panel.component.scss']
 })
 export class PanelComponent {
+
+
+
+
+  panelData: { name: string, label: string}[] = [
+      { name: "pages", label: "Number of Pages"},
+      { name: "languages", label: "Number of Languages"},
+  ];
+
+
+
+
+
+
+
+
+
+
+
+
+
   //set up to notify parent (home)of change - this emits event, that is caught in parentHTML
   @Output() panelChanged = new EventEmitter<void>
 
@@ -35,6 +56,20 @@ export class PanelComponent {
   //     this.extrasChanged();
   //   } 
   // }
+
+
+  valueChanged(dataType: string){
+    switch (dataType){
+      case "pages":
+        this.pagesValueChanged=true
+        break;
+      case "languages":
+        this.pagesValueChanged=true
+        break;
+    }
+  }
+
+
 
   addExtra(extra: string ): void {
     if(extra==="pages") {
