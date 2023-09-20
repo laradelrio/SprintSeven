@@ -15,6 +15,7 @@ import { ServiceTotals } from '../interfaces/serviceTotals.interface';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
+  // @ViewChild(PanelComponent) panelComponent!: PanelComponent;
 
   totalQuote: number = 0;
 
@@ -49,7 +50,9 @@ export class HomeComponent {
     }
   
     computeTotalPrice() {
-         
+         if (!this.f.get('serviceCheckbox.website')?.value){
+          this.totalQuoteService.computeWebSiteExtras(0,0);
+         }
         this.totalQuote = this.totalQuoteService.computeTotalQuote(this.clientForm)
     
     }

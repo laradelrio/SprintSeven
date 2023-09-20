@@ -8,8 +8,8 @@ import { CompanyServicesService } from '../companyServices/company-services.serv
 })
 export class TotalQuoteService {
 
-  // netDays: number = 30;
-  // websiteExtras: number = 0;
+  netDays: number = 30;
+  websiteExtras: number = 0;
   // websitePrice: number = 0;
   // seoAndPubliPrice: number = 0;
   // totalPrice: number = 0;
@@ -51,9 +51,14 @@ export class TotalQuoteService {
 
     Object.values(serviceTotals).forEach((service) => this.totalQuoteSum += service);
 
-    return this.totalQuoteSum;
+    return this.totalQuoteSum+ this.websiteExtras;
   }
 
+  computeWebSiteExtras(pages: number, languages: number):void {
+    this.websiteExtras = pages * languages * this.netDays;
+  }
+
+}
   
 
   // computeTotalPrice(service: CompanyService): number {
@@ -76,12 +81,9 @@ export class TotalQuoteService {
     
   //     }
     
-}
+// }
 //  
-//   computeWebSiteExtras(pages: number, languages: number):void {
-//     this.websiteExtras = pages * languages * this.netDays;
-//   }
-
+  
 //   getTotalPrice(){
 //     return this.totalPrice;
 //   }
@@ -90,4 +92,3 @@ export class TotalQuoteService {
 //   //   this.clientQuotes.push(client);
     
 //   // }
-// }

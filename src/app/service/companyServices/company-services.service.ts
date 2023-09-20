@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CompanyService } from '../../interfaces/companyService.interface';
+import { websitePanelData } from 'src/app/interfaces/websitePanelData.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -22,4 +23,9 @@ export class CompanyServicesService {
     id: "publicity",
     },
   ]
+
+  websitePanelData: websitePanelData[] = [
+    { name: "pages", label: "Number of Pages", valueChanged: false},
+    { name: "languages", label: "Number of Languages", valueChanged: false},
+  ];
 }

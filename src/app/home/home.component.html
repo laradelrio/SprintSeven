@@ -18,7 +18,8 @@
 
       <label [for]="service.id" class="form-check-label" > {{service.label}} - {{service.price}}€ </label>
 
-      <app-home-panel *ngIf="f.get('serviceCheckbox.website')?.value && service.id==='website'">
+      <app-home-panel *ngIf="f.get('serviceCheckbox.website')?.value && service.id==='website'"
+      (panelChanged)="computeTotalPrice()">
       </app-home-panel>
      
     </div>

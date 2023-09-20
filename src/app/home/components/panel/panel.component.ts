@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TotalQuoteService } from 'src/app/service/totalQuote/total-quote.service';
 import { PopupComponent } from '../popup/popup.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CompanyServicesService } from 'src/app/service/companyServices/company-services.service';
+import { websitePanelData } from 'src/app/interfaces/websitePanelData.interface';
 
 @Component({
   selector: 'app-home-panel',
@@ -13,11 +15,8 @@ export class PanelComponent {
 
 
 
+  
 
-  panelData: { name: string, label: string}[] = [
-      { name: "pages", label: "Number of Pages"},
-      { name: "languages", label: "Number of Languages"},
-  ];
 
 
 
@@ -36,13 +35,12 @@ export class PanelComponent {
 
   pages: number = 0;
   languages: number = 0;
-  pagesValueChanged: boolean = false;
-  languagesValueChanged: boolean = false;
 
   serviceDetailsForm: FormGroup;
   constructor(private fb: FormBuilder,
-    public totalBudget: TotalQuoteService,
+    public totalQuoteService: TotalQuoteService,
     private openBModal: NgbModal,
+    private companyServicesList: CompanyServicesService,
     ) {
     this.serviceDetailsForm = this.fb.group({
       pages: ["0", [ Validators.min(1), Validators.required]],
@@ -50,52 +48,49 @@ export class PanelComponent {
     })
   }
   
-  // computeExrasPrice(): void {
-  //   if(this.serviceDetailsForm.valid){
-  //     this.totalBudget.computeWebSiteExtras(this.pages, this.languages);
-  //     this.extrasChanged();
-  //   } 
-  // }
 
-
-  valueChanged(dataType: string){
-    switch (dataType){
-      case "pages":
-        this.pagesValueChanged=true
-        break;
-      case "languages":
-        this.pagesValueChanged=true
-        break;
-    }
+  get panelDataList(): websitePanelData[] {
+    return this.companyServicesList.websitePanelData
   }
+
+  computeExrasPrice(): void {
+    if(this.serviceDetailsForm.valid){
+      this.totalQuoteService.computeWebSiteExtras(this.pages, this.languages);
+      this.extrasChanged();
+    } 
+  }
+
+
+  
 
 
 
   addExtra(extra: string ): void {
+   
     if(extra==="pages") {
-      this.pagesValueChanged=true;
+      this.panelDataList[0].valueChanged=true;
       this.pages++;
-      this.serviceDetailsForm.controls['pages'].setValue(this.pages);
+      this.serviceDetailsForm.controls[extra].setValue(this.pages);
     }else {
-      this.languagesValueChanged=true;
+      this.panelDataList[1].valueChanged=true;
         this.languages++
-        this.serviceDetailsForm.controls['languages'].setValue(this.languages);
+        this.serviceDetailsForm.controls[extra].setValue(this.languages);
     }
-    // this.computeExrasPrice()
+    this.computeExrasPrice()
   }
 
   subtractExtra(extra: string): void {
+    
     if(extra==="pages") {
-      this.pagesValueChanged=true;
-      this.pagesValueChanged=true;
-      this.pages--
-      this.serviceDetailsForm.controls['pages'].setValue(this.pages);
+      this.panelDataList[0].valueChanged=true;
+        this.pages --
+      this.serviceDetailsForm.controls[extra].setValue(this.pages);
      }else {
-        this.languagesValueChanged=true;
+        this.panelDataList[1].valueChanged=true;
         this.languages--
-        this.serviceDetailsForm.controls['languages'].setValue(this.languages);
+        this.serviceDetailsForm.controls[extra].setValue(this.languages);
      }
-    // this.computeExrasPrice()
+    this.computeExrasPrice()
    }
 
   //Emit to home(parent), smt in child changed

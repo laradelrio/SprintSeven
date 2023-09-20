@@ -7,7 +7,7 @@
 
 <form [formGroup]="serviceDetailsForm" class="from-group">
 
-    <section *ngFor="let data of panelData" class="mb-3">
+    <section *ngFor="let data of panelDataList" class="mb-3">
         <label class="form-label" [for]="data.name">{{data.label}} </label> 
         <div class="d-flex">
             <button 
@@ -31,21 +31,18 @@
         </div>
          
         <!-- ONLY WHEN FULL FORM SUMBITED-->
-        <p *ngIf="serviceDetailsForm.controls[data.name].getError('min') 
-        && serviceDetailsForm.controls[data.name].touched && serviceDetailsForm.controls[data.name].dirty "
+        <p *ngIf="serviceDetailsForm.controls[data.name].errors 
+            && ( serviceDetailsForm.controls[data.name].touched    
+            || data.valueChanged===true)"
             class="text-danger ps-5">Please enter a value greater than or equal to 1</p>
 
     </section>
 </form>
 
 
-
-
-
 <!-- 
-
-
-
+serviceDetailsForm.controls[data.name].getError('min') 
+         && serviceDetailsForm.controls[data.name].dirty
 
     <form [formGroup]="serviceDetailsForm" class="from-group">
         <section class="mb-3">
