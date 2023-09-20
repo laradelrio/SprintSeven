@@ -37,9 +37,7 @@ export class FormValidationService {
         return null; //not reached min mumber of checkboxed, null
       };
     }
-  
- 
-     
+
   }
   
    

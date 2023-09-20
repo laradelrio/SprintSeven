@@ -2,7 +2,7 @@
 <app-home-navbar></app-home-navbar>
 <div class="container mt-5">
   <h2>What would you like to do?</h2>
-<form [formGroup]="clientForm">
+<form [formGroup]="clientForm" (ngSubmit)="saveServices()" >
 
   <section formGroupName="serviceCheckbox" class="mt-4 mb-3" >
 
@@ -26,10 +26,39 @@
     
     <p *ngIf="f.controls['serviceCheckbox'].errors && f.controls['serviceCheckbox'].touched"  class="text-danger">Please select at least one service</p>
       <p>Total: {{totalQuote}}€</p>
+
   </section>
 
-</form>
 
+  <section>
+  
+      <div *ngFor=" let data of clientData" class="mb-3">
+  
+          <div class="form-floating">
+              <input [formControlName]="data.dataType" type="text" class="form-control" [id]="data.dataType" [placeholder]="data.dataType" (keydown)="formIsValid()"/>
+              <label [for]="data.dataType"> {{data.label}}</label>
+          </div>
+  
+
+          <p *ngIf=" (data.dataType==='clientName') && f.controls['clientName'].touched  && ( f.controls['clientName'].getError('required')
+            || f.controls['clientName'].getError('minLength'))"
+            class="text-danger"> Minimum 2 characters</p>
+
+          <p *ngIf=" (data.dataType==='quoteName') && f.controls['quoteName'].touched  && ( f.controls['quoteName'].getError('required')
+            || f.controls['quoteName'].getError('minLength'))"
+            class="text-danger"> Minimum 3 characters</p>
+           
+      </div>
+ 
+
+  </section>
+
+  <button type="submit" [disabled]="!isValidForm">Submit</button>
+</form>
+<p>value</p>
+{{f.value | json}}
+<p>status</p>
+{{f.status | json}}
 <!--
   <form (ngSubmit)="formIsValid() ">
       <section class="mt-4 mb-3">

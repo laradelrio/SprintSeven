@@ -2,28 +2,29 @@ import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ServiceTotals } from 'src/app/interfaces/serviceTotals.interface';
 import { CompanyServicesService } from '../companyServices/company-services.service';
+import { ClientSummary } from 'src/app/interfaces/clientSummary.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TotalQuoteService {
 
+  clients: ClientSummary[]= [];
+
   netDays: number = 30;
   websiteExtras: number = 0;
-  // websitePrice: number = 0;
-  // seoAndPubliPrice: number = 0;
-  // totalPrice: number = 0;
-  // clientQuotes: string[] =[];
-  
-  
-
   totalQuoteSum: number = 0;
+
+  pages: number = 0;
+  languages: number = 0;
+  purchasedServices: string[] = [];
 
   constructor(  public companyServicesList: CompanyServicesService,){ }
 
   computeTotalQuote(clientForm: FormGroup): number {
 
     this.totalQuoteSum = 0;
+    let purchasedServices: string[] = [];
 
     let serviceObject = clientForm.get('serviceCheckbox')?.value;
     let cloneService = { ...serviceObject };
@@ -45,50 +46,59 @@ export class TotalQuoteService {
       let servicePrice = (listServiceObject?.price) || 0;
 
       if (checked) {
-        serviceTotals[serviceId] += servicePrice;;
+        serviceTotals[serviceId] += servicePrice;
+        purchasedServices.push(serviceId);
       }
     });
 
     Object.values(serviceTotals).forEach((service) => this.totalQuoteSum += service);
+    this.purchasedServices = purchasedServices
 
     return this.totalQuoteSum+ this.websiteExtras;
   }
 
   computeWebSiteExtras(pages: number, languages: number):void {
     this.websiteExtras = pages * languages * this.netDays;
+    this.pages = pages;
+    this.languages = languages
   }
 
+  saveClientQuote(clientForm: FormGroup, clientName: string, quoteName:string){
+    
+    let quote = 0;
+    let services: string[]=[];
+    let pages = 0;
+    let languages = 0;
+
+    let client: ClientSummary = {
+      clientName : "", 
+      quoteName : "",
+      quote : 0,
+      services : this.purchasedServices,
+    } 
+       
+    if(clientForm.get('serviceCheckbox.website')?.value){
+      client = {
+        clientName : clientName, 
+        quoteName : quoteName,
+        quote : this.totalQuoteSum,
+        services : this.purchasedServices,
+        pages : this.pages,
+        languages : this.languages,
+      }
+    } else{
+        client = {
+          clientName : clientName, 
+          quoteName : quoteName,
+          quote : this.totalQuoteSum,
+          services : this.purchasedServices,
+        }  
+      
+      this.clients.push(client);
+    }
+    console.log("clients array ", this.clients);
+  };
+  
+
 }
-  
 
-  // computeTotalPrice(service: CompanyService): number {
- 
-  //       if (service.id !== "website") {
-  //         if (service.checked) {
-  //           this.seoAndPubliPrice += service.price;
-  //         } else {
-  //           this.seoAndPubliPrice -= service.price;
-  //         }
-  //       } else {
-  //         this.websitePrice = 0;
-  //         if (service.checked) {
-  //           this.websitePrice += service.price + this.websiteExtras;
-  //         }
-  //       }
-    
-  //       this.seoAndPubliPrice + this.websitePrice
-  //       return this.totalPrice = this.seoAndPubliPrice + this.websitePrice;
-    
-  //     }
-    
-// }
-//  
-  
-//   getTotalPrice(){
-//     return this.totalPrice;
-//   }
-
-//   // saveQuotes(client){
-//   //   this.clientQuotes.push(client);
-    
-//   // }

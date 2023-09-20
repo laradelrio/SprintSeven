@@ -1,12 +1,12 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild}  from '@angular/core';
 import { CompanyServicesService } from '../service/companyServices/company-services.service';
 import { CompanyService } from '../interfaces/companyService.interface';
 import { TotalQuoteService } from '../service/totalQuote/total-quote.service';
-import { ClientQuoteFormComponent } from './components/client-quote-form/client-quote-form.component';
-import { PanelComponent } from './components/panel/panel.component';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormValidationService } from '../service/FormValidationService/form-validation-service.service';
-import { ServiceTotals } from '../interfaces/serviceTotals.interface';
+import { ClientData } from '../interfaces/clientData.interface';
+import { ClientDataServiceService } from '../service/clientDataService/client-data-service.service';
+import { PanelComponent } from './components/panel/panel.component';
 
 
 @Component({
@@ -15,10 +15,10 @@ import { ServiceTotals } from '../interfaces/serviceTotals.interface';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
-  // @ViewChild(PanelComponent) panelComponent!: PanelComponent;
+  @ViewChild(PanelComponent) panelComponent!: PanelComponent;
 
   totalQuote: number = 0;
-
+  isValidForm: boolean = false;
 
   clientForm = new FormGroup({
    
@@ -29,39 +29,72 @@ export class HomeComponent {
       publicity: new FormControl(false),
       }, this.formValidationService.requireCheckboxesToBeCheckedValidator()
     ),
-     
-    name: new FormControl('',[Validators.required,Validators.minLength(2)]),
-    quote: new FormControl('',  [Validators.required, Validators.min(200)]),
-  
+   
+    clientName: new FormControl('',[Validators.required,Validators.minLength(2)]),
+    quoteName: new FormControl('',  [Validators.required, Validators.minLength(3)]),   
   })
 
   constructor(
     public formValidationService: FormValidationService,
     public companyServicesList: CompanyServicesService,
+    public clientDataList: ClientDataServiceService,
     public totalQuoteService: TotalQuoteService,
     ){}   
 
     get f(){
       return this.clientForm;
     }
-
+  
     get companyServiceList(): CompanyService[]{
       return this.companyServicesList.companyServices
     }
+    
+    get clientData(): ClientData[]{
+       return this.clientDataList.clientData
+    }
   
     computeTotalPrice() {
+
          if (!this.f.get('serviceCheckbox.website')?.value){
           this.totalQuoteService.computeWebSiteExtras(0,0);
          }
-        this.totalQuote = this.totalQuoteService.computeTotalQuote(this.clientForm)
-    
+        this.totalQuote = this.totalQuoteService.computeTotalQuote(this.clientForm);
+
+       this.formIsValid();
+        
     }
-      
-     
-    
-      saveServices():void{
-        let spreadServicesChecked = [...[this.f.get('serviceCheckbox')?.value]]
+
+    formIsValid(){
+      console.log("formfucntion")
+      if (this.f.get('serviceCheckbox.website')?.value){
+        console.log("website")
+        if(this.panelComponent.panelIsValid()){ //ERROR HERE,
+          console.log("website + valid")
+          this.isValidForm = true;
+        } else {
+          console.log("website + NOT VALIDd")
+          this.isValidForm = false;
+        };
+      }else {
+        if(this.f.valid){
+          console.log(" general + valid")
+          this.isValidForm = true;
+        } else {
+          this.isValidForm = false;
+          console.log(" general + NOT alid")
+        };
       }
+    }
+    
+    saveServices():void{
+     
+      if(this.isValidForm){
+               
+        let clienName = this.f.get('clientName')?.value || " ";
+        let quoteName = this.f.get('quoteName')?.value || " ";
+        this.totalQuoteService.saveClientQuote( this.clientForm, clienName, quoteName )
+      }
+     
 
      
       
@@ -156,5 +189,5 @@ export class HomeComponent {
  
   }
 
-
+}
 

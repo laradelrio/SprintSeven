@@ -5,101 +5,36 @@
     </div>
         
 
-<form [formGroup]="serviceDetailsForm" class="from-group">
-
-    <section *ngFor="let data of panelDataList" class="mb-3">
-        <label class="form-label" [for]="data.name">{{data.label}} </label> 
-        <div class="d-flex">
-            <button 
-                type="button" 
-                class="btn btn-primary me-2"
-                (click)="subtractExtra(data.name)">
-            <i class="fa-solid fa-minus"></i></button>
-
-            <input 
-                type="number"
-                [formControlName]="data.name" 
-                class="form-control"
-                [id]="data.name"/> 
-                
-            <button 
-                type="button" 
-                class="btn btn-primary ms-2"
-                (click)="addExtra(data.name)">
-            <i class="fa-solid fa-plus"></i></button>  
-            
-        </div>
-         
-        <!-- ONLY WHEN FULL FORM SUMBITED-->
-        <p *ngIf="serviceDetailsForm.controls[data.name].errors 
-            && ( serviceDetailsForm.controls[data.name].touched    
-            || data.valueChanged===true)"
-            class="text-danger ps-5">Please enter a value greater than or equal to 1</p>
-
-    </section>
-</form>
-
-
-<!-- 
-serviceDetailsForm.controls[data.name].getError('min') 
-         && serviceDetailsForm.controls[data.name].dirty
-
     <form [formGroup]="serviceDetailsForm" class="from-group">
-        <section class="mb-3">
-            <label class="form-label" for="pages"> Number of Pages </label> 
+
+        <section *ngFor="let data of panelDataList" class="mb-3">
+            <label class="form-label" [for]="data.name">{{data.label}} </label> 
             <div class="d-flex">
-            
                 <button 
                     type="button" 
                     class="btn btn-primary me-2"
-                    (click)="addExtra('pages')">
-                    <i class="fa-solid fa-plus"></i></button>
+                    (click)="subtractExtra(data.name)">
+                <i class="fa-solid fa-minus"></i></button>
+
                 <input 
                     type="number"
-                    formControlName="pages" 
-                    
+                    [formControlName]="data.name" 
                     class="form-control"
-                    [(ngModel)]="pages"
-                    id="pages"/>            
-                
+                    [id]="data.name"/> 
+                    
                 <button 
                     type="button" 
                     class="btn btn-primary ms-2"
-                    (click)="subtractExtra('pages')">
-                <i class="fa-solid fa-minus"></i></button>            
+                    (click)="addExtra(data.name)">
+                <i class="fa-solid fa-plus"></i></button>  
+                
             </div>
-            <p *ngIf="(serviceDetailsForm.controls['pages'].getError('min') && pagesValueChanged ) || serviceDetailsForm.controls['pages'].touched"
-            class="text-danger ps-5">Please enter a value greater than or equal to 1</p>
-        </section>
-    
-        <label class="form-label" for="languages"> Number of Languages </label>
-        <div class="d-flex ">
-            <button 
-                type="button" 
-                class="btn btn-primary me-2"
-                (click)="addExtra('languages')">
-                <i class="fa-solid fa-plus"></i></button>
-            <input 
-                type="number"
-                formControlName="languages" 
-               
-                class="form-control" 
-                [(ngModel)]="languages"
-                id="languages" />
             
-            <button
-                type="button" 
-                class="btn btn-primary ms-2"
-                (click)="subtractExtra('languages')">
-            <i class="fa-solid fa-minus"></i></button>
-        </div>
-        <p *ngIf="(serviceDetailsForm.controls['languages'].getError('min') && languagesValueChanged) || serviceDetailsForm.controls['languages'].touched "
-        class="text-danger ps-5">Please enter a value greater than or equal to 1</p>
-        
+            <p *ngIf="serviceDetailsForm.controls[data.name].errors 
+                && ( serviceDetailsForm.controls[data.name].touched    
+                || data.valueChanged===true)"
+                class="text-danger ps-5">Please enter a value greater than or equal to 1</p>
+
+        </section>
     </form>
-    
 </div>
-    
-    
-    
- -->

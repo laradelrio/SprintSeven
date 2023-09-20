@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Output} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TotalQuoteService } from 'src/app/service/totalQuote/total-quote.service';
 import { PopupComponent } from '../popup/popup.component';
@@ -12,23 +12,6 @@ import { websitePanelData } from 'src/app/interfaces/websitePanelData.interface'
   styleUrls: ['./panel.component.scss']
 })
 export class PanelComponent {
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   //set up to notify parent (home)of change - this emits event, that is caught in parentHTML
   @Output() panelChanged = new EventEmitter<void>
@@ -48,9 +31,12 @@ export class PanelComponent {
     })
   }
   
-
   get panelDataList(): websitePanelData[] {
     return this.companyServicesList.websitePanelData
+  }
+  
+  panelIsValid(){
+    return this.serviceDetailsForm.valid;
   }
 
   computeExrasPrice(): void {
@@ -59,11 +45,6 @@ export class PanelComponent {
       this.extrasChanged();
     } 
   }
-
-
-  
-
-
 
   addExtra(extra: string ): void {
    
@@ -76,8 +57,9 @@ export class PanelComponent {
         this.languages++
         this.serviceDetailsForm.controls[extra].setValue(this.languages);
     }
+    
     this.computeExrasPrice()
-  }
+  };
 
   subtractExtra(extra: string): void {
     
@@ -90,17 +72,17 @@ export class PanelComponent {
         this.languages--
         this.serviceDetailsForm.controls[extra].setValue(this.languages);
      }
+
     this.computeExrasPrice()
-   }
+   };
 
   //Emit to home(parent), smt in child changed
   extrasChanged(): void{
     this.panelChanged.emit();
-  }
+  };
  
   openPopup(): void{    
     this.openBModal.open(PopupComponent, { centered: true });
-  }
+  }; 
 
-
-  }
+}
