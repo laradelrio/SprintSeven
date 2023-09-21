@@ -12,8 +12,10 @@ import { PopupComponent } from './home/components/popup/popup.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavbarComponent } from './home/components/navbar/navbar.component';
 import { ClientQuoteListComponent } from './home/components/client-quote-list/client-quote-list.component';
-import { ClientQuoteFormComponent } from './home/components/client-quote-form/client-quote-form.component';
+
 import { TotalQuoteService } from './service/totalQuote/total-quote.service';
+import { NglrxPipesModule } from '@nglrx/pipes';
+import { SortDirective } from './directives/sort.directive';
 
 @NgModule({
   declarations: [
@@ -24,14 +26,17 @@ import { TotalQuoteService } from './service/totalQuote/total-quote.service';
     PopupComponent,
     NavbarComponent,
     ClientQuoteListComponent,
-    ClientQuoteFormComponent,
+    SortDirective,
+  
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    NgbModule
+    NgbModule,
+    NglrxPipesModule,
   ],
   providers: [
     CompanyServicesService,

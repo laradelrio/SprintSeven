@@ -86,6 +86,7 @@ export class TotalQuoteService {
         pages : this.pages,
         languages : this.languages,
       }
+      console.log(client)
     } else{
         client = {
           clientName : clientName, 
@@ -94,8 +95,11 @@ export class TotalQuoteService {
           services : this.purchasedServices,
         }  
       
-      this.clients.push(client);
+       
+      
+     
     }
+    this.clients.push(client);
     console.log("clients array ", this.clients);
   };
   

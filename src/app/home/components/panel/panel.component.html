@@ -20,7 +20,8 @@
                     type="number"
                     [formControlName]="data.name" 
                     class="form-control"
-                    [id]="data.name"/> 
+                    [id]="data.name"
+                    (change)="extrasChanged()"/>  
                     
                 <button 
                     type="button" 

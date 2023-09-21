@@ -35,17 +35,15 @@
       <div *ngFor=" let data of clientData" class="mb-3">
   
           <div class="form-floating">
-              <input [formControlName]="data.dataType" type="text" class="form-control" [id]="data.dataType" [placeholder]="data.dataType" (keydown)="formIsValid()"/>
+              <input [formControlName]="data.dataType" type="text" class="form-control" [id]="data.dataType" [placeholder]="data.dataType" (keyup)="formIsValid()"/>
               <label [for]="data.dataType"> {{data.label}}</label>
           </div>
   
 
-          <p *ngIf=" (data.dataType==='clientName') && f.controls['clientName'].touched  && ( f.controls['clientName'].getError('required')
-            || f.controls['clientName'].getError('minLength'))"
+          <p *ngIf=" (data.dataType==='clientName') && f.controls['clientName'].touched && !this.f.get('clientName')?.valid" 
             class="text-danger"> Minimum 2 characters</p>
 
-          <p *ngIf=" (data.dataType==='quoteName') && f.controls['quoteName'].touched  && ( f.controls['quoteName'].getError('required')
-            || f.controls['quoteName'].getError('minLength'))"
+          <p *ngIf=" (data.dataType==='quoteName') && f.controls['quoteName'].touched && !this.f.get('clientName')?.valid"
             class="text-danger"> Minimum 3 characters</p>
            
       </div>
@@ -53,12 +51,22 @@
 
   </section>
 
-  <button type="submit" [disabled]="!isValidForm">Submit</button>
+  <button type="submit" [disabled]="!isValidForm" class="btn btn-primary">Submit</button>
 </form>
-<p>value</p>
-{{f.value | json}}
-<p>status</p>
-{{f.status | json}}
+
+client name 
+{{this.f.get('clientName')?.valid}}<br>
+quote name 
+{{this.f.get('quoteName')?.valid}}<br>
+isVAlid 
+{{isValidForm}} <br>
+form valid
+{{f.valid}}
+
+
+<app-home-client-quote-list></app-home-client-quote-list>
+
+
 <!--
   <form (ngSubmit)="formIsValid() ">
       <section class="mt-4 mb-3">

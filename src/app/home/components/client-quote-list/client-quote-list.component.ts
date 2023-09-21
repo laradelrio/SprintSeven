@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TotalQuoteService } from 'src/app/service/totalQuote/total-quote.service';
 
 @Component({
   selector: 'app-home-client-quote-list',
@@ -7,4 +8,15 @@ import { Component } from '@angular/core';
 })
 export class ClientQuoteListComponent {
 
-}
+  constructor(
+    public totalQuoteService: TotalQuoteService,
+  ){}
+
+  get clientList(){
+    return this.totalQuoteService.clients
+  }
+
+  }
+
+  
+

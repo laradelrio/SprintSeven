@@ -1,4 +1,4 @@
-import { Component, ViewChild}  from '@angular/core';
+import { Component, OnInit, ViewChild}  from '@angular/core';
 import { CompanyServicesService } from '../service/companyServices/company-services.service';
 import { CompanyService } from '../interfaces/companyService.interface';
 import { TotalQuoteService } from '../service/totalQuote/total-quote.service';
@@ -9,14 +9,15 @@ import { ClientDataServiceService } from '../service/clientDataService/client-da
 import { PanelComponent } from './components/panel/panel.component';
 
 
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
-  @ViewChild(PanelComponent) panelComponent!: PanelComponent;
-
+export class HomeComponent  {
+ @ViewChild(PanelComponent) panelComponent: PanelComponent | undefined;
+  
   totalQuote: number = 0;
   isValidForm: boolean = false;
 
@@ -39,7 +40,11 @@ export class HomeComponent {
     public companyServicesList: CompanyServicesService,
     public clientDataList: ClientDataServiceService,
     public totalQuoteService: TotalQuoteService,
-    ){}   
+    
+    ){
+      
+    }   
+
 
     get f(){
       return this.clientForm;
@@ -65,37 +70,35 @@ export class HomeComponent {
     }
 
     formIsValid(){
-      console.log("formfucntion")
+      console.log("viad function")
       if (this.f.get('serviceCheckbox.website')?.value){
-        console.log("website")
-        if(this.panelComponent.panelIsValid()){ //ERROR HERE,
-          console.log("website + valid")
+        if(this.f.valid && this.panelComponent?.panelIsValid()){
           this.isValidForm = true;
         } else {
-          console.log("website + NOT VALIDd")
           this.isValidForm = false;
         };
       }else {
+        console.log("entra aqui")
         if(this.f.valid){
-          console.log(" general + valid")
+          console.log("entra bien")
           this.isValidForm = true;
         } else {
+          console.log("form ValidityState",this.f.valid)
+          console.log("entra mal")
           this.isValidForm = false;
-          console.log(" general + NOT alid")
         };
       }
     }
     
     saveServices():void{
-     
       if(this.isValidForm){
-               
         let clienName = this.f.get('clientName')?.value || " ";
         let quoteName = this.f.get('quoteName')?.value || " ";
         this.totalQuoteService.saveClientQuote( this.clientForm, clienName, quoteName )
       }
-     
-
+    }
+  }
+  
      
       
     
@@ -187,7 +190,4 @@ export class HomeComponent {
   //     // this.totalBudget.saveQuotes(client);
   //   }
  
-  }
-
-}
-
+ 

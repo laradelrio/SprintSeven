@@ -1,1 +1,37 @@
 <p>client-quote-list works!</p>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Client</th>
+      <th scope="col">Order Name</th>
+      <th scope="col">Services Requested</th>
+      <th scope="col">Service Specifications</th>
+      <th scope="col">Total</th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+    <tr *ngFor="let client of clientList">
+      <th scope="row">1</th>
+      <td> {{client.clientName}} </td>
+      <td> {{client.quoteName}} </td>
+      <td> {{client.services | join: ', ' | titlecase}} <br>
+       
+      <td>
+       <p *ngIf="client.pages" class="mb-0">WebSite Details:</p>  
+        <ul *ngIf="client.pages">
+        
+          <li>Pages: {{client.pages}}</li>
+          <li>Languages: {{client.languages}}</li>
+        </ul>
+      </td>
+      <td> {{client.quote}}€</td>
+    
+    </tr>
+
+  </tbody>
+
+
+</table>

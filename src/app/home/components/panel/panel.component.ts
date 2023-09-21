@@ -37,6 +37,7 @@ export class PanelComponent {
   
   panelIsValid(){
     return this.serviceDetailsForm.valid;
+
   }
 
   computeExrasPrice(): void {
@@ -58,7 +59,8 @@ export class PanelComponent {
         this.serviceDetailsForm.controls[extra].setValue(this.languages);
     }
     
-    this.computeExrasPrice()
+    this.computeExrasPrice();
+    // this.extrasChanged();
   };
 
   subtractExtra(extra: string): void {
@@ -73,7 +75,8 @@ export class PanelComponent {
         this.serviceDetailsForm.controls[extra].setValue(this.languages);
      }
 
-    this.computeExrasPrice()
+    this.computeExrasPrice();
+    // this.extrasChanged();
    };
 
   //Emit to home(parent), smt in child changed
