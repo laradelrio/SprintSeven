@@ -1,0 +1,12 @@
+
+<div ngbDropdown class="dropdown">
+    <button ngbDropdownToggle class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Sort Table
+    </button>
+    <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <a ngbDropdownItem class="dropdown-item" (click)="sortAlphabeticallyClient()">Alphabetically by Client</a>
+      <a ngbDropdownItem class="dropdown-item" (click)="sortAlphabeticallyQuote()">Alphabetically by Quote</a>
+      <a ngbDropdownItem  class="dropdown-item" (click)="sortByDate()">By Date</a>
+      <a ngbDropdownItem class="dropdown-item" (click)="resetOrder()">Reset Order</a>
+    </div>
+  </div>

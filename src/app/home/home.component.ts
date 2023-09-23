@@ -7,6 +7,8 @@ import { FormValidationService } from '../service/FormValidationService/form-val
 import { ClientData } from '../interfaces/clientData.interface';
 import { ClientDataServiceService } from '../service/clientDataService/client-data-service.service';
 import { PanelComponent } from './components/panel/panel.component';
+import { RearrangeTableService } from '../service/rearrangeTable/rearrange-table.service';
+import { ClientQuoteListComponent } from './components/client-quote-list/client-quote-list.component';
 
 
 
@@ -17,6 +19,7 @@ import { PanelComponent } from './components/panel/panel.component';
 })
 export class HomeComponent  {
  @ViewChild(PanelComponent) panelComponent: PanelComponent | undefined;
+ @ViewChild(ClientQuoteListComponent) clientTableComponent!: ClientQuoteListComponent;
   
   totalQuote: number = 0;
   isValidForm: boolean = false;
@@ -40,6 +43,7 @@ export class HomeComponent  {
     public companyServicesList: CompanyServicesService,
     public clientDataList: ClientDataServiceService,
     public totalQuoteService: TotalQuoteService,
+    public rearrangeTable: RearrangeTableService,
     
     ){
       
@@ -70,7 +74,6 @@ export class HomeComponent  {
     }
 
     formIsValid(){
-      console.log("viad function")
       if (this.f.get('serviceCheckbox.website')?.value){
         if(this.f.valid && this.panelComponent?.panelIsValid()){
           this.isValidForm = true;
@@ -78,13 +81,9 @@ export class HomeComponent  {
           this.isValidForm = false;
         };
       }else {
-        console.log("entra aqui")
         if(this.f.valid){
-          console.log("entra bien")
           this.isValidForm = true;
         } else {
-          console.log("form ValidityState",this.f.valid)
-          console.log("entra mal")
           this.isValidForm = false;
         };
       }
@@ -94,100 +93,17 @@ export class HomeComponent  {
       if(this.isValidForm){
         let clienName = this.f.get('clientName')?.value || " ";
         let quoteName = this.f.get('quoteName')?.value || " ";
-        this.totalQuoteService.saveClientQuote( this.clientForm, clienName, quoteName )
+        this.totalQuoteService.saveClientQuote( this.clientForm, clienName, quoteName );
+        this.resetForm();
+        this.clientTableComponent.clientsSortedAsSubmited();
+        
       }
+    }
+
+    resetForm(){
+      this.clientForm.reset();
+        this.panelComponent?.serviceDetailsForm.reset();
     }
   }
   
      
-      
-    
-    // computeTotalPrice(service:CompanyService){
-
-    //   this.totalPrice= this.computeTotalPrice
-    //   this.totalPrice = this.totalBudget.computeTotalPrice(service);
-    //   this.clientFormComponent.fillClientQuote(this.totalPrice);
-    // }
-
-  // @ViewChild(ClientQuoteFormComponent) clientFormComponent!: ClientQuoteFormComponent;
-  // @ViewChild(PanelComponent) panelComponent!: PanelComponent;
-  // panelResetValue: number= 0
-  // totalPrice: number = 0;
-  // noServiceSelected: boolean = false;
-
-  
-     
-  //   // change service checked status and redirect
-  //   isChecked(event:any, service:CompanyService){
-   
-  //     if(!event.target.checked){
-  //       this.noServiceSelected = true;
-  //       service.checked = false;
-  //       this.computeTotalPrice(service);
-       
-  //     }else if (event.target.checked) {
-  //       this.noServiceSelected = false;
-  //       service.checked = true;
-  //       this.totalBudget.computeWebSiteExtras(0,0);
-  //       this.computeTotalPrice(service);    
-  //     }
-  //   }
-
-  //   computeTotalPrice(service:CompanyService){
-  //     this.totalPrice = this.totalBudget.computeTotalPrice(service);
-  //     this.clientFormComponent.fillClientQuote(this.totalPrice);
-  //   }
-    
-  // formIsValid() {
-  //   let companyService = this.companyServicesList.companyServices
-  //   let client = [];
-  //   let services = []
-  //   debugger
-  //   //se is websiteChecked
-  //   if (companyService[0].checked) {
-  //     console.log("website checked");
-  //     //see if webdetails valid, and if so send
-  //     if (this.panelComponent.serviceDetailsForm.valid) {
-  //       services.push({ "website": this.panelComponent.serviceDetailsForm.value })
-  //       console.log("website", this.panelComponent.serviceDetailsForm.value);
-  //       // {"pages": this.panelComponent.serviceDetailsForm.get('pages')?.value}, 
-  //       // {"lanugages": this.panelComponent.serviceDetailsForm.get('languages')?.value}
-
-  //       console.log("clientQutoe w-e", services);
-  //     } else {
-  //       this.panelComponent.serviceDetailsForm.markAllAsTouched();
-  //       console.log("website pannel invalid")
-  //     }
-  //   } else {
-  //     //alert(form invalid)
-  //     console.log("website not checked")
-  //   }
-  
-  //   //check if other services checked adn save if so save it
-  //   for(let i = 1; i<companyService.length ; i++) {
-  //     if (companyService[i].checked) {
-  //       services.push(companyService[i].name);
-  //       console.log(services);
-  //     }
-  //   }
-
-  //   //check if soem service checked
-  //   if (services.length > 0) {
-  //     console.log("service", services)
-  //     this.noServiceSelected = false;
-  //     if (this.clientFormComponent.clientQuoteForm.valid) {
-  //       client.push({ "Client Summary": this.clientFormComponent.clientQuoteForm.value }),
-  //         client.push({ "services": services })
-  //       console.log(this.clientFormComponent.clientQuoteForm.value)
-  //       console.log(JSON.stringify(client))
-  //     }
-  //    } else {
-  //       this.noServiceSelected = true;
-  //       this.clientFormComponent.clientQuoteForm.markAllAsTouched();
-  //       console.log("form invalid, due to no services, or client details")
-  //     };
-  //     console.log
-  //     // this.totalBudget.saveQuotes(client);
-  //   }
- 
- 

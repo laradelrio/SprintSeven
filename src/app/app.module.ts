@@ -16,6 +16,8 @@ import { ClientQuoteListComponent } from './home/components/client-quote-list/cl
 import { TotalQuoteService } from './service/totalQuote/total-quote.service';
 import { NglrxPipesModule } from '@nglrx/pipes';
 import { SortDirective } from './directives/sort.directive';
+import { DropdownComponent } from './home/components/dropdown/dropdown.component';
+import { SearchBarComponent } from './home/components/search-bar/search-bar.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,8 @@ import { SortDirective } from './directives/sort.directive';
     NavbarComponent,
     ClientQuoteListComponent,
     SortDirective,
+    DropdownComponent,
+    SearchBarComponent,
   
     
   ],

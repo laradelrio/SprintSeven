@@ -69,19 +69,22 @@ export class TotalQuoteService {
     let services: string[]=[];
     let pages = 0;
     let languages = 0;
+    let formSubmitionDate: Date = new Date();
 
     let client: ClientSummary = {
       clientName : "", 
       quoteName : "",
       quote : 0,
+      date: new Date, 
       services : this.purchasedServices,
     } 
        
     if(clientForm.get('serviceCheckbox.website')?.value){
       client = {
-        clientName : clientName, 
-        quoteName : quoteName,
+        clientName : clientName.toLowerCase(), 
+        quoteName : quoteName.toLowerCase(),
         quote : this.totalQuoteSum,
+        date: formSubmitionDate,
         services : this.purchasedServices,
         pages : this.pages,
         languages : this.languages,
@@ -92,12 +95,9 @@ export class TotalQuoteService {
           clientName : clientName, 
           quoteName : quoteName,
           quote : this.totalQuoteSum,
+          date: formSubmitionDate,
           services : this.purchasedServices,
         }  
-      
-       
-      
-     
     }
     this.clients.push(client);
     console.log("clients array ", this.clients);
