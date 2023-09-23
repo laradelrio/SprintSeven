@@ -10,7 +10,8 @@ export class SearchBarComponent {
 
   onSearch(term:string){
       this.searchTerm.emit(term);
-    
   }
+
+  
 
 }
