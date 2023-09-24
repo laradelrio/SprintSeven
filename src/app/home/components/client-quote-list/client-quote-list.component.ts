@@ -42,17 +42,9 @@ export class ClientQuoteListComponent {
   }
 
 
-  // sortAlphabetically(){
-  //   this.rearrageTableService.alphabetically();
-  //   this.clientList= this.rearrageTableService.clientsAlphabetically;
-  // }
-  // sortByDate(){
-  //   this.rearrageTableService.byDate();
-  //   this.clientList = this.rearrageTableService.clientsByDate;
-  // }
+  
  
 
-  //take array from the service, reorder it and take the new oerdered on and make the table from that. 
   
   //local storage -- tada
   // save date when submiting client

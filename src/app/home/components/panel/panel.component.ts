@@ -1,89 +1,82 @@
-import { Component, EventEmitter, Output} from '@angular/core';
+import { Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TotalQuoteService } from 'src/app/service/totalQuote/total-quote.service';
 import { PopupComponent } from '../popup/popup.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CompanyServicesService } from 'src/app/service/companyServices/company-services.service';
 import { websitePanelData } from 'src/app/interfaces/websitePanelData.interface';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-home-panel',
   templateUrl: './panel.component.html',
   styleUrls: ['./panel.component.scss']
 })
-export class PanelComponent {
+export class PanelComponent implements OnInit{
 
   //set up to notify parent (home)of change - this emits event, that is caught in parentHTML
   @Output() panelChanged = new EventEmitter<void>
 
-  pages: number = 0;
-  languages: number = 0;
 
   serviceDetailsForm: FormGroup;
   constructor(private fb: FormBuilder,
     public totalQuoteService: TotalQuoteService,
     private openBModal: NgbModal,
     private companyServicesList: CompanyServicesService,
+    private activatedRoute: ActivatedRoute
     ) {
     this.serviceDetailsForm = this.fb.group({
-      pages: ["0", [ Validators.min(1), Validators.required]],
-      languages: ["0", [Validators.min(1), Validators.required]]
+      pages: ["", [ Validators.min(1), Validators.required]],
+      languages: ["", [Validators.min(1), Validators.required]]
     })
   }
   
+  ngOnInit(): void {
+    this.sf.get('pages')?.setValue( Number(this.activatedRoute.snapshot.queryParamMap.get('wPages')),)
+    this.sf.controls['languages'].setValue( Number(this.activatedRoute.snapshot.queryParamMap.get('wLang')),)
+    this.extrasChanged();
+  }
+  
+  get sf(){
+    return this.serviceDetailsForm
+  }
   get panelDataList(): websitePanelData[] {
     return this.companyServicesList.websitePanelData
   }
   
-  panelIsValid(){
+  panelIsValid(): boolean{
     return this.serviceDetailsForm.valid;
 
   }
 
-  computeExrasPrice(): void {
-    if(this.serviceDetailsForm.valid){
-      this.totalQuoteService.computeWebSiteExtras(this.pages, this.languages);
-      this.extrasChanged();
-    } 
-  }
-
   addExtra(extra: string ): void {
    
-    if(extra==="pages") {
-      this.panelDataList[0].valueChanged=true;
-      this.pages++;
-      this.serviceDetailsForm.controls[extra].setValue(this.pages);
-    }else {
-      this.panelDataList[1].valueChanged=true;
-        this.languages++
-        this.serviceDetailsForm.controls[extra].setValue(this.languages);
-    }
-    
-    this.computeExrasPrice();
-    // this.extrasChanged();
+    let panelDataObject = this.panelDataList.find((panelData) => panelData.name === extra)
+
+    panelDataObject!.valueChanged=true;
+    this.serviceDetailsForm.controls[extra].setValue(Number(this.sf.get(extra)?.value) + 1);
+
+    this.extrasChanged();
   };
 
   subtractExtra(extra: string): void {
-    
-    if(extra==="pages") {
-      this.panelDataList[0].valueChanged=true;
-        this.pages --
-      this.serviceDetailsForm.controls[extra].setValue(this.pages);
-     }else {
-        this.panelDataList[1].valueChanged=true;
-        this.languages--
-        this.serviceDetailsForm.controls[extra].setValue(this.languages);
-     }
+    let panelDataObject = this.panelDataList.find((panelData) => panelData.name === extra)
 
-    this.computeExrasPrice();
-    // this.extrasChanged();
+    panelDataObject!.valueChanged=true;
+    this.serviceDetailsForm.controls[extra].setValue(Number(this.sf.get(extra)?.value) - 1);
+    
+    this.extrasChanged();
    };
 
+  
   //Emit to home(parent), smt in child changed
   extrasChanged(): void{
-    this.panelChanged.emit();
-  };
- 
+    if(this.serviceDetailsForm.valid){
+      this.totalQuoteService.computeWebSiteExtras(this.sf.get('pages')?.value, this.sf.get('languages')?.value);
+      this.panelChanged.emit();
+    };
+  }
+
   openPopup(): void{    
     this.openBModal.open(PopupComponent, { centered: true });
   }; 
