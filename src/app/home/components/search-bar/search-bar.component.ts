@@ -8,10 +8,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 export class SearchBarComponent {
   @Output() searchTerm = new EventEmitter<string>
 
-  onSearch(term:string){
-      this.searchTerm.emit(term);
+  onSearch(term: string) {
+    this.searchTerm.emit(term);
   }
-
-  
-
 }

@@ -7,14 +7,14 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./popup.component.scss']
 })
 export class PopupComponent {
-  
+
   constructor(
     private popup: NgbModal,
-  ){}
+  ) { }
 
-  modal= this.popup;
+  modal = this.popup;
 
-  close(){
+  close() {
     this.modal.dismissAll();
   }
 

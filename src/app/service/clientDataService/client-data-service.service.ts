@@ -10,7 +10,7 @@ export class ClientDataServiceService {
 
   clientData: ClientData[] = [
     { dataType: "clientName", label: " Client Name" },
-    { dataType: "quoteName", label: "Quote Name"},
+    { dataType: "quoteName", label: "Quote Name" },
   ];
-  
+
 }

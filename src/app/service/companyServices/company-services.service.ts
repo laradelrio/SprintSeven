@@ -7,25 +7,28 @@ import { websitePanelData } from 'src/app/interfaces/websitePanelData.interface'
 })
 export class CompanyServicesService {
 
-  constructor() {}
+  constructor() { }
   //interface
   companyServices: CompanyService[] = [
-    {label: "Make a Web Site",
-    price: 500,
-    id: "website",
+    {
+      label: "Make a Web Site",
+      price: 500,
+      id: "website",
     },
-    {label: "SEO campaign",
-    price: 300,
-    id: "seo",
+    {
+      label: "SEO campaign",
+      price: 300,
+      id: "seo",
     },
-    {label: "Publicity campaign",
-    price: 200,
-    id: "publicity",
+    {
+      label: "Publicity campaign",
+      price: 200,
+      id: "publicity",
     },
   ]
 
   websitePanelData: websitePanelData[] = [
-    { name: "pages", label: "Number of Pages", valueChanged: false},
-    { name: "languages", label: "Number of Languages", valueChanged: false},
+    { name: "pages", label: "Number of Pages", valueChanged: false },
+    { name: "languages", label: "Number of Languages", valueChanged: false },
   ];
 }

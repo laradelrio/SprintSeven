@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { CompanyServicesService } from '../service/companyServices/company-services.service';
 import { CompanyService } from '../interfaces/companyService.interface';
 import { TotalQuoteService } from '../service/totalQuote/total-quote.service';
@@ -56,7 +56,7 @@ export class HomeComponent implements OnInit {
     this.f.get("serviceCheckbox.website")?.setValue(Boolean(this.activatedRoute.snapshot.queryParamMap.get('web')));
     this.f.get("serviceCheckbox.seo")?.setValue(Boolean(this.activatedRoute.snapshot.queryParamMap.get('seo')));
     this.f.get("serviceCheckbox.publicity")?.setValue(Boolean(this.activatedRoute.snapshot.queryParamMap.get('publi')));
-    
+
   }
 
   get f() {
@@ -72,7 +72,7 @@ export class HomeComponent implements OnInit {
   }
 
   computeTotalPrice() {
-   
+
     console.log("compute form home")
 
     if (!this.f.get('serviceCheckbox.website')?.value) {
@@ -129,11 +129,11 @@ export class HomeComponent implements OnInit {
       })
   }
 
-  getURL(){
-    
-    this.clipboard.copy(window.location.href);
-    
-  }
-}      
+  getURL() {
 
-  
+    this.clipboard.copy(window.location.href);
+
+  }
+}
+
+

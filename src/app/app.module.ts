@@ -29,7 +29,7 @@ import { SearchBarComponent } from './home/components/search-bar/search-bar.comp
     NavbarComponent,
     ClientQuoteListComponent,
     DropdownComponent,
-    SearchBarComponent,    
+    SearchBarComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,7 +45,7 @@ import { SearchBarComponent } from './home/components/search-bar/search-bar.comp
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { 
+export class AppModule {
 
 
 }

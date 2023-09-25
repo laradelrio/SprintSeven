@@ -18,7 +18,7 @@ export class RearrangeTableService {
     return this.totalQuoteService.clients;
   }
 
-  alphabeticallyClient() {  
+  alphabeticallyClient() {
     this.clientsAlphabetically = this.clientArray.slice();
 
     this.clientsAlphabetically.sort(function (a, b) {

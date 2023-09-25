@@ -9,34 +9,28 @@ import { RearrangeTableService } from 'src/app/service/rearrangeTable/rearrange-
 export class DropdownComponent {
   @Output() rearrangeTable = new EventEmitter<string>();
 
-   testList=10;
+  constructor(private rearrangeTableService: RearrangeTableService) {}
 
-   
-  constructor(
-    private rearrangeTableService: RearrangeTableService){
-
-    }
-
-  sortAlphabeticallyClient(){
+  sortAlphabeticallyClient() {
     this.rearrangeTableService.alphabeticallyClient()
     this.sortRequest("alphabeticallyClient");
   }
-  
-  sortAlphabeticallyQuote(){
+
+  sortAlphabeticallyQuote() {
     this.rearrangeTableService.alphabeticallyQuote();
     this.sortRequest("alphabeticallyQuote");
   }
 
-  sortByDate(){
+  sortByDate() {
     this.rearrangeTableService.byDate()
     this.sortRequest("byDate");
   }
 
-  resetOrder(){
+  resetOrder() {
     this.sortRequest("reset");
   }
 
-  sortRequest(sortType: string){
+  sortRequest(sortType: string) {
     this.rearrangeTable.emit(sortType);
   };
 }

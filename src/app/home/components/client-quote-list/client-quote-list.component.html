@@ -1,7 +1,7 @@
-
 <div class="row">
-<app-home-table-search-bar (searchTerm)="showSearch($event)" class="col-10"> </app-home-table-search-bar>
-<app-home-table-dropdown  (rearrangeTable)="getSortedClientArray($event)" class="col-2"> </app-home-table-dropdown> </div>
+  <app-home-table-search-bar (searchTerm)="showSearch($event)" class="col-10"> </app-home-table-search-bar>
+  <app-home-table-dropdown (rearrangeTable)="getSortedClientArray($event)" class="col-2"> </app-home-table-dropdown>
+</div>
 
 
 <table class="table table-sm">
@@ -25,19 +25,18 @@
       <td> {{client.quoteName | titleCase}} </td>
       <td> {{client.services | join: ', ' | titlecase}} <br>
       <td>
-       <p *ngIf="client.pages" class="mb-0">WebSite Details:</p>  
+        <p *ngIf="client.pages" class="mb-0">WebSite Details:</p>
         <ul *ngIf="client.pages">
-        
+
           <li>Pages: {{client.pages}}</li>
           <li>Languages: {{client.languages}}</li>
         </ul>
       </td>
       <td> {{client.quote}}€</td>
       <td> {{client.date}} </td>
-    
+
     </tr>
 
   </tbody>
-
 
 </table>

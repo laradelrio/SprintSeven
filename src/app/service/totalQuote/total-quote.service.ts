@@ -9,7 +9,7 @@ import { ClientSummary } from 'src/app/interfaces/clientSummary.interface';
 })
 export class TotalQuoteService {
 
-  clients: ClientSummary[]= [];
+  clients: ClientSummary[] = [];
 
   netDays: number = 30;
   websiteExtras: number = 0;
@@ -19,7 +19,7 @@ export class TotalQuoteService {
   languages: number = 0;
   purchasedServices: string[] = [];
 
-  constructor(  public companyServicesList: CompanyServicesService,){ }
+  constructor(public companyServicesList: CompanyServicesService,) { }
 
   computeTotalQuote(clientForm: FormGroup): number {
 
@@ -54,55 +54,49 @@ export class TotalQuoteService {
     Object.values(serviceTotals).forEach((service) => this.totalQuoteSum += service);
     this.purchasedServices = purchasedServices
 
-    return this.totalQuoteSum+ this.websiteExtras;
+    return this.totalQuoteSum + this.websiteExtras;
   }
 
-  computeWebSiteExtras(pages: number, languages: number):void {
+  computeWebSiteExtras(pages: number, languages: number): void {
     this.websiteExtras = pages * languages * this.netDays;
     this.pages = pages;
     this.languages = languages
   }
 
-  saveClientQuote(clientForm: FormGroup, clientName: string, quoteName:string){
-    
-    let quote = 0;
-    let services: string[]=[];
-    let pages = 0;
-    let languages = 0;
+  saveClientQuote(clientForm: FormGroup, clientName: string, quoteName: string) {
+
     let formSubmitionDate: Date = new Date();
 
     let client: ClientSummary = {
-      clientName : "", 
-      quoteName : "",
-      quote : 0,
-      date: new Date, 
-      services : this.purchasedServices,
-    } 
-       
-    if(clientForm.get('serviceCheckbox.website')?.value){
+      clientName: "",
+      quoteName: "",
+      quote: 0,
+      date: new Date,
+      services: this.purchasedServices,
+    }
+
+    if (clientForm.get('serviceCheckbox.website')?.value) {
       client = {
-        clientName : clientName.toLowerCase(), 
-        quoteName : quoteName.toLowerCase(),
-        quote : this.totalQuoteSum,
+        clientName: clientName.toLowerCase(),
+        quoteName: quoteName.toLowerCase(),
+        quote: this.totalQuoteSum,
         date: formSubmitionDate,
-        services : this.purchasedServices,
-        pages : this.pages,
-        languages : this.languages,
+        services: this.purchasedServices,
+        pages: this.pages,
+        languages: this.languages,
       }
       console.log(client)
-    } else{
-        client = {
-          clientName : clientName, 
-          quoteName : quoteName,
-          quote : this.totalQuoteSum,
-          date: formSubmitionDate,
-          services : this.purchasedServices,
-        }  
+    } else {
+      client = {
+        clientName: clientName,
+        quoteName: quoteName,
+        quote: this.totalQuoteSum,
+        date: formSubmitionDate,
+        services: this.purchasedServices,
+      }
     }
     this.clients.push(client);
-    console.log("clients array ", this.clients);
   };
-  
 
 }
 
