@@ -1,42 +1,41 @@
-<div class="row">
-  <app-home-table-search-bar (searchTerm)="showSearch($event)" class="col-10"> </app-home-table-search-bar>
-  <app-home-table-dropdown (rearrangeTable)="getSortedClientArray($event)" class="col-2"> </app-home-table-dropdown>
+<div class="container">
+  <div class="d-flex row pt-5 pb-0 pb-lg-5 ">
+    <app-home-table-search-bar (searchTerm)="showSearch($event)" class="col-lg-10 "> </app-home-table-search-bar>
+    <app-home-table-dropdown (rearrangeTable)="getSortedClientArray($event)" class="ms-lg-auto ms-md-auto mt-3 mt-lg-0 col-2"> </app-home-table-dropdown>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-sm mb-5 table-hover">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Client</th>
+          <th scope="col">Order Name</th>
+          <th scope="col">Services Requested</th>
+          <th scope="col">Service Specifications</th>
+          <th scope="col">Total</th>
+          <th scope="col">Order Submission Date</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let client of clientList, let i = index">
+          <td> {{i+1}}</td>
+          <td> {{client.clientName | titleCase}} </td>
+          <td> {{client.quoteName | titleCase}} </td>
+          <td> {{client.services | join: ', ' | titlecase}} <br>
+          <td>
+            <p *ngIf="client.pages" class="mb-0">WebSite Details:</p>
+            <ul *ngIf="client.pages">
+
+              <li>Pages: {{client.pages}}</li>
+              <li>Languages: {{client.languages}}</li>
+            </ul>
+          </td>
+          <td> {{client.quote}}€</td>
+          <td> {{client.date}} </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
-
-
-<table class="table table-sm">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Client</th>
-      <th scope="col">Order Name</th>
-      <th scope="col">Services Requested</th>
-      <th scope="col">Service Specifications</th>
-      <th scope="col">Total</th>
-      <th scope="col">Order Submission Date</th>
-    </tr>
-  </thead>
-
-  <tbody>
-
-    <tr *ngFor="let client of clientList, let i = index">
-      <td> {{i+1}}</td>
-      <td> {{client.clientName | titleCase}} </td>
-      <td> {{client.quoteName | titleCase}} </td>
-      <td> {{client.services | join: ', ' | titlecase}} <br>
-      <td>
-        <p *ngIf="client.pages" class="mb-0">WebSite Details:</p>
-        <ul *ngIf="client.pages">
-
-          <li>Pages: {{client.pages}}</li>
-          <li>Languages: {{client.languages}}</li>
-        </ul>
-      </td>
-      <td> {{client.quote}}€</td>
-      <td> {{client.date}} </td>
-
-    </tr>
-
-  </tbody>
-
-</table>

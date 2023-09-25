@@ -73,8 +73,8 @@ export class HomeComponent implements OnInit {
 
   computeTotalPrice() {
 
-    console.log("compute form home")
-
+    
+    
     if (!this.f.get('serviceCheckbox.website')?.value) {
       this.totalQuoteService.computeWebSiteExtras(0, 0);
     }
@@ -107,8 +107,10 @@ export class HomeComponent implements OnInit {
       let quoteName = this.f.get('quoteName')?.value || " ";
       this.totalQuoteService.saveClientQuote(this.clientForm, clienName, quoteName);
       this.resetForm();
+      this.formIsValid();
       this.clientTableComponent.clientsSortedAsSubmited();
     }
+  
   }
 
   resetForm() {

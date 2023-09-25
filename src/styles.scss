@@ -2,6 +2,11 @@
 /*add bootstrap vaiables to change here*/
 
 $display-font-weight:300;
+$secondary:#5a48d4;
+$primary:#202418;
+$table-color: #202418;
+
 @import "../node_modules/bootstrap/scss/bootstrap.scss"
 /* Importing Bootstrap SCSS file. */;
 @import 'bootstrap/scss/bootstrap';
+
