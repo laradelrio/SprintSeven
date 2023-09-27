@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CompanyServicesService } from '../service/companyServices/company-services.service';
 import { CompanyService } from '../interfaces/companyService.interface';
 import { TotalQuoteService } from '../service/totalQuote/total-quote.service';
@@ -24,19 +24,7 @@ export class HomeComponent implements OnInit {
   totalQuote: number = 0;
   isValidForm: boolean = false;
 
-  clientForm = new FormGroup({
-
-    serviceCheckbox: new FormGroup(
-      {
-        website: new FormControl(false),
-        seo: new FormControl(false),
-        publicity: new FormControl(false),
-      }, this.formValidationService.requireCheckboxesToBeCheckedValidator()
-    ),
-
-    clientName: new FormControl('', [Validators.required, Validators.minLength(2)]),
-    quoteName: new FormControl('', [Validators.required, Validators.minLength(3)]),
-  })
+ clientForm: FormGroup
 
   constructor(
     public formValidationService: FormValidationService,
@@ -47,17 +35,35 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private clipboard: Clipboard,
-    private render2: Renderer2,
   ) {
+    
+    this.clientForm = new FormGroup({
+    
+      serviceCheckbox: new FormGroup(
+        {
+          website: new FormControl(false),
+          seo: new FormControl(false),
+          publicity: new FormControl(false),
+        }, 
+      ),
+  
+      clientName: new FormControl('', [Validators.required, Validators.minLength(2)]),
+      quoteName: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    })
 
+  };
 
-  }
   ngOnInit(): void {
-    this.f.get("serviceCheckbox.website")?.setValue(Boolean(this.activatedRoute.snapshot.queryParamMap.get('web')));
-    this.f.get("serviceCheckbox.seo")?.setValue(Boolean(this.activatedRoute.snapshot.queryParamMap.get('seo')));
-    this.f.get("serviceCheckbox.publicity")?.setValue(Boolean(this.activatedRoute.snapshot.queryParamMap.get('publi')));
+    this.f.get("serviceCheckbox.website")?.setValue(this.activatedRoute.snapshot.queryParamMap.get('web'));
+    this.f.get("serviceCheckbox.seo")?.setValue(this.activatedRoute.snapshot.queryParamMap.get('seo'));
+    this.f.get("serviceCheckbox.publicity")?.setValue(this.activatedRoute.snapshot.queryParamMap.get('publi'));
 
-  }
+    this.totalQuoteService.computeWebSiteExtras(
+      Number(this.activatedRoute.snapshot.queryParamMap.get('wPages')),
+      Number(this.activatedRoute.snapshot.queryParamMap.get('wLang')))
+    
+    this.totalQuote = this.totalQuoteService.computeTotalQuote(this.clientForm);
+  } 
 
   get f() {
     return this.clientForm;
@@ -72,9 +78,6 @@ export class HomeComponent implements OnInit {
   }
 
   computeTotalPrice() {
-
-    
-    
     if (!this.f.get('serviceCheckbox.website')?.value) {
       this.totalQuoteService.computeWebSiteExtras(0, 0);
     }
@@ -82,7 +85,6 @@ export class HomeComponent implements OnInit {
 
     this.formIsValid();
     this.appendQueryParam();
-
   }
 
   formIsValid() {
@@ -110,7 +112,6 @@ export class HomeComponent implements OnInit {
       this.formIsValid();
       this.clientTableComponent.clientsSortedAsSubmited();
     }
-  
   }
 
   resetForm() {
@@ -119,22 +120,44 @@ export class HomeComponent implements OnInit {
   }
 
   appendQueryParam() {
-    this.router.navigate(['/home'],
+    let seoParam;
+    if(this.f.get("serviceCheckbox.seo")?.value){
+      seoParam=true;
+    }
+    let publiParam;
+    if(this.f.get("serviceCheckbox.publicity")?.value){
+      publiParam=true;
+    }
+     let pagesParam;
+    if(this.panelComponent?.sf.get('pages')?.value){
+      pagesParam=this.panelComponent?.sf.get('pages')?.value;
+    }
+    let langParam;
+    if(this.panelComponent?.sf.get('languages')?.value){
+      langParam=this.panelComponent?.sf.get('languages')?.value;
+    }
+    let webParam;
+    if(this.f.get("serviceCheckbox.website")?.value){
+      webParam=true;
+    } else{
+      langParam=null;
+      pagesParam=null;
+    }
+
+   this.router.navigate(['/home'],
       {
         queryParams: {
-          web: this.f.get("serviceCheckbox.website")?.value,
-          seo: this.f.get("serviceCheckbox.seo")?.value,
-          publi: this.f.get("serviceCheckbox.publicity")?.value,
-          wPages: this.panelComponent?.sf.get('pages')?.value,
-          wLang: this.panelComponent?.sf.get('languages')?.value,
+          web: webParam,
+          seo: seoParam,
+          publi: publiParam,
+          wPages: pagesParam,
+          wLang: langParam,
         }
       })
-  }
+  };
 
   getURL() {
-
     this.clipboard.copy(window.location.href);
-
   }
 }
 

@@ -32,9 +32,8 @@ export class PanelComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.sf.get('pages')?.setValue(Number(this.activatedRoute.snapshot.queryParamMap.get('wPages')),)
-    this.sf.controls['languages'].setValue(Number(this.activatedRoute.snapshot.queryParamMap.get('wLang')),)
-    this.extrasChanged();
+    this.sf.get('pages')?.setValue(Number(this.activatedRoute.snapshot.queryParamMap.get('wPages'))),
+    this.sf.controls['languages'].setValue(Number(this.activatedRoute.snapshot.queryParamMap.get('wLang')))
   }
 
   get sf() {
@@ -66,6 +65,7 @@ export class PanelComponent implements OnInit {
     this.serviceDetailsForm.controls[extra].setValue(Number(this.sf.get(extra)?.value) - 1);
 
     this.extrasChanged();
+    
   };
 
 
