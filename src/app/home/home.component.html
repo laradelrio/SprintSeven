@@ -1,63 +1,64 @@
 
 <app-home-navbar></app-home-navbar>
-<div class="p-5 d-flex row">
-  <button #urlBtn class="btn btn-outline-secondary ms-auto col-4 col-lg-2 mb-3 mb-lg-0" (click)="getURL()">Share URL </button>
-  <h2>What would you like to do?</h2>
-  <form [formGroup]="clientForm" (ngSubmit)="saveServices()">
+<div class="container">
+  <div class="p-5 d-flex row">
+    <button #urlBtn class="btn btn-outline-secondary ms-auto col-4 col-lg-2 mb-3 mb-lg-0" (click)="getURL()">Share URL </button>
+    <h2>What would you like to do?</h2>
+    <form [formGroup]="clientForm" (ngSubmit)="saveServices()">
 
-    <section formGroupName="serviceCheckbox" class="mt-4 mb-3" >
+      <section formGroupName="serviceCheckbox" class="mt-4 mb-3" >
 
-      <div *ngFor="let service of companyServiceList" class="form-check" >
+        <div *ngFor="let service of companyServiceList" class="form-check" >
 
-        <input  
-          type="checkbox"
-          class="form-check-input"
-          [formControlName]="service.id"
-          [id]="service.id"
-          (change)="computeTotalPrice()"
-        />
+          <input  
+            type="checkbox"
+            class="form-check-input"
+            [formControlName]="service.id"
+            [id]="service.id"
+            (change)="computeTotalPrice()"
+          />
 
-        <label [for]="service.id" class="form-check-label" > {{service.label}} - {{service.price}}€ </label>
+          <label [for]="service.id" class="form-check-label" > {{service.label}} - {{service.price}}€ </label>
 
-        <app-home-panel *ngIf="f.get('serviceCheckbox.website')?.value && service.id==='website'"
-        (panelChanged)="computeTotalPrice()">
-        </app-home-panel>
-      
-      </div>
-      
-      <p *ngIf="f.controls['serviceCheckbox'].errors && f.controls['serviceCheckbox'].touched"  class="text-danger">Please select at least one service</p>
-        <p>Total: {{totalQuote}}€</p>
-
-    </section>
-
-
-    <section>
-    
-        <div *ngFor=" let data of clientData" class="mb-3">
-    
-            <div class="form-floating">
-                <input [formControlName]="data.dataType" type="text" class="form-control" [id]="data.dataType" [placeholder]="data.dataType" (keyup)="formIsValid()"/>
-                <label [for]="data.dataType"> {{data.label}}</label>
-            </div>
-    
-
-            <p *ngIf=" (data.dataType==='clientName') && f.controls['clientName'].touched && !this.f.get('clientName')?.valid" 
-              class="text-danger"> Minimum 2 characters</p>
-
-            <p *ngIf=" (data.dataType==='quoteName') && f.controls['quoteName'].touched && !this.f.get('clientName')?.valid"
-              class="text-danger"> Minimum 3 characters</p>
-            
+          <app-home-panel *ngIf="f.get('serviceCheckbox.website')?.value && service.id==='website'"
+          (panelChanged)="computeTotalPrice()">
+          </app-home-panel>
+        
         </div>
-  
+        
+        <p *ngIf="f.controls['serviceCheckbox'].errors && f.controls['serviceCheckbox'].touched"  class="text-danger">Please select at least one service</p>
+          <p>Total: {{totalQuote}}€</p>
 
-    </section>
+      </section>
 
-    <button type="submit" [disabled]="!isValidForm" class="btn btn-primary">Submit</button>
-  </form>
+
+      <section>
+      
+          <div *ngFor=" let data of clientData" class="mb-3">
+      
+              <div class="form-floating">
+                  <input [formControlName]="data.dataType" type="text" class="form-control" [id]="data.dataType" [placeholder]="data.dataType" (keyup)="formIsValid()"/>
+                  <label [for]="data.dataType"> {{data.label}}</label>
+              </div>
+      
+
+              <p *ngIf=" (data.dataType==='clientName') && f.controls['clientName'].touched && !this.f.get('clientName')?.valid" 
+                class="text-danger"> Minimum 2 characters</p>
+
+              <p *ngIf=" (data.dataType==='quoteName') && f.controls['quoteName'].touched && !this.f.get('clientName')?.valid"
+                class="text-danger"> Minimum 3 characters</p>
+              
+          </div>
+    
+
+      </section>
+
+      <button type="submit" [disabled]="!isValidForm" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+
+  <app-home-client-quote-list></app-home-client-quote-list>
+
+
 </div>
-
-<app-home-client-quote-list></app-home-client-quote-list>
-
-
-
 
