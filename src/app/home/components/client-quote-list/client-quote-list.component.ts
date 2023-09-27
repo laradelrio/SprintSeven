@@ -37,7 +37,7 @@ export class ClientQuoteListComponent {
   };
 
   showSearch(searchTerm: string) {
-    this.clientList = this.totalQuoteService.clients.filter((client) => client.clientName === searchTerm || client.quoteName === searchTerm);
+    this.clientList = this.totalQuoteService.clients.filter((client) => client.clientName.includes(searchTerm) || client.quoteName.includes(searchTerm));
 
   }
 
