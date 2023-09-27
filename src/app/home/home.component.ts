@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
   totalQuote: number = 0;
   isValidForm: boolean = false;
 
- clientForm: FormGroup
+  clientForm: FormGroup
 
   constructor(
     public formValidationService: FormValidationService,
