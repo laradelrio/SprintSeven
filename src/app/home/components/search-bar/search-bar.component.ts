@@ -11,4 +11,21 @@ export class SearchBarComponent {
   onSearch(term: string) {
     this.searchTerm.emit(term);
   }
+
+  //trigered on click X and hit Enter
+  onClear(term: string){
+    if(term.length >= 1){
+      this.searchTerm.emit(term);
+    } else{
+      this.searchTerm.emit("");
+    }
+  }
+
+  //detect when input emptied manually
+  onKeyDown(term: string){
+    if (term.length===0){
+      this.onClear(term);
+    }
+  }
+
 }

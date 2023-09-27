@@ -1,7 +1,7 @@
 <nav>
   <form class="form-inline d-flex col-12">
     <input #searchTerm class="form-control mr-sm-2 " type="search" placeholder="Search Client or Quote Name"
-      aria-label="Search">
+      aria-label="Search" (search)="onClear(searchTerm.value)" (keyup)="onKeyDown(searchTerm.value)">
     <button (click)="onSearch(searchTerm.value)" class="btn btn-primary ms-1"
       type="submit">Search</button>
   </form>
