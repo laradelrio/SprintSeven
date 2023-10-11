@@ -1,27 +1,21 @@
-# Sprint7
+# Angular Budget Calculator
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.4.
+An Angular-based budget calculator application that helps users customize and generate budgets for various services.
 
-## Development server
+## Features
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- Select services (web page creation, SEO, advertising) via checkboxes.
+- Customize web page services by choosing the number of pages and languages.
+- Calculate the total budget based on selected services and customizations.
+- Welcome screen with explanations.
+- Help button to provide information about input fields.
+- Store and manage multiple client budgets.
+- Sort budgets alphabetically and by date.
+- Copy and share the URL to preserve selected checkboxes and total price when sharing budgets.
 
-## Code scaffolding
+## Getting Started
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+1. Clone the repository.
+2. Install dependencies with `npm install`.
+3. Start the development server with `ng serve`.
+4. Open the app in your browser at `http://localhost:4200/`.
